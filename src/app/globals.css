@@ -1,1 +1,117 @@
 @import "tailwindcss";
+
+/* ============================================
+   UNMARKED LABEL STUDIOS - Global Styles
+   ============================================ */
+
+/* CSS Custom Properties (Design Tokens) */
+:root {
+  /* Typography */
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* Colors - Minimal Palette */
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-muted: #737373;
+  --color-border: #e5e5e5;
+  --color-accent: #000000;
+
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 8rem;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0a0a0a;
+    --color-foreground: #fafafa;
+    --color-muted: #a3a3a3;
+    --color-border: #262626;
+    --color-accent: #ffffff;
+  }
+}
+
+/* Base Reset & Defaults */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  line-height: 1.6;
+  min-height: 100dvh;
+}
+
+/* Responsive Images */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form Elements */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove animations for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus Styles for Accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Selection Styling */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-background);
+}
+
+/* Smooth anchor scrolling with offset for fixed headers */
+html {
+  scroll-padding-top: 5rem;
+}
