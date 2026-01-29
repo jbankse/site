@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, ReactNode } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 
 interface BouncingElementProps {
     /** Content to bounce - can be text, image, or any React node */
@@ -104,25 +104,51 @@ export function BouncingElement({
 }
 
 interface HeroProps {
-    /** Content to display in the bouncing element */
     children?: ReactNode;
-    /** Speed of the bounce animation (default: 2) */
     speed?: number;
-    /** Callback when the element bounces */
     onBounce?: (edge: "left" | "right" | "top" | "bottom") => void;
-    /** Additional classes for the hero section */
     className?: string;
     /** Additional classes for the bouncing element */
     elementClassName?: string;
 }
 
+const TRANSLATIONS = [
+    "UNMARKED LABEL",           // English
+    "ÉTIQUETTE SANS MARQUE",    // French
+    "ETICHETTA SENZA MARCHIO",  // Italian
+    "ETIQUETA SIN MARCA",       // Spanish
+    "アンマークド・レーベル",      // Japanese
+    "언마크드 라벨",             // Korean
+    "UNGEKENNZEICHNETES LABEL"  // German
+];
+
 export default function Hero({
-    children = <a href="/" className="text-xl uppercase tracking-wide text-[#333] font-bold">UNMARKED LABEL</a>,
+    children, // Removed default here to rely on internal cycling
     speed = 2,
     onBounce,
     className = "",
     elementClassName = "",
 }: HeroProps) {
+    const [textIndex, setTextIndex] = useState(0);
+    const [isBlurry, setIsBlurry] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // Start blur out
+            setIsBlurry(true);
+
+            // Change text and blur in
+            setTimeout(() => {
+                setTextIndex((prev) => (prev + 1) % TRANSLATIONS.length);
+                setIsBlurry(false);
+            }, 300); // 300ms matches transition duration
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const currentText = TRANSLATIONS[textIndex];
+
     return (
         <section className={`flex-1 relative ${className}`}>
             <BouncingElement
@@ -130,7 +156,16 @@ export default function Hero({
                 onBounce={onBounce}
                 className={elementClassName}
             >
-                {children}
+                <a
+                    href="/"
+                    className="text-xl uppercase tracking-wide text-[#333] font-bold block"
+                    style={{
+                        filter: isBlurry ? 'blur(8px)' : undefined,
+                        opacity: isBlurry ? 0.5 : undefined
+                    }}
+                >
+                    {currentText}
+                </a>
             </BouncingElement>
         </section>
     );

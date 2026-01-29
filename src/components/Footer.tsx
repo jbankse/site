@@ -6,26 +6,26 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-6">
                 {/* Left - Site Links */}
                 <nav className="flex flex-col gap-2 text-sm uppercase tracking-wide">
-                    <Link href="/work" className="text-[#333] hover:text-[#02ff12] transition-colors w-fit">
+                    <Link href="/work" className="text-[#333] link-blur w-fit">
                         Works
                     </Link>
-                    <a href="/about" className="text-[#333] hover:text-[#02ff12] transition-colors w-fit">
+                    <a href="/about" className="text-[#333] link-blur w-fit">
                         About
                     </a>
-                    <a href="/contact" className="text-[#333] hover:text-[#02ff12] transition-colors w-fit">
+                    <a href="/contact" className="text-[#333] link-blur w-fit">
                         Contact
                     </a>
                 </nav>
 
                 {/* Right - Social Links */}
                 <nav className="flex flex-col gap-2 text-sm uppercase tracking-wide text-right">
-                    <a href="https://instagram.com/unmarkedlabel" target="_blank" rel="noopener noreferrer" className="text-[#333] hover:text-[#02ff12] transition-colors ml-auto">
+                    <a href="https://instagram.com/unmarkedlabel" target="_blank" rel="noopener noreferrer" className="text-[#333] link-blur ml-auto">
                         Instagram
                     </a>
-                    <a href="#" className="text-[#333] hover:text-[#02ff12] transition-colors ml-auto">
-                        Twitter
+                    <a href="https://youtube.com/@unmarkedlabelstudios" target="_blank" rel="noopener noreferrer" className="text-[#333] link-blur ml-auto">
+                        YouTube
                     </a>
-                    <a href="#" className="text-[#333] hover:text-[#02ff12] transition-colors ml-auto">
+                    <a href="#" className="text-[#333] link-blur ml-auto">
                         LinkedIn
                     </a>
                 </nav>

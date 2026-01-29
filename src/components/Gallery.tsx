@@ -27,8 +27,8 @@ export default function Gallery({ className = "" }: GalleryProps) {
     return (
         <section className={`flex-1 overflow-hidden ${className}`}>
             <div className="h-full overflow-y-auto">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6">
+                <div className="w-full">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 px-6">
                         {items.map((item) => (
                             <div
                                 key={item.id}

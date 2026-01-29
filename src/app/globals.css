@@ -115,3 +115,13 @@ select {
 html {
   scroll-padding-top: 5rem;
 }
+
+/* Link Blur Effect - Hover to blur like translations */
+.link-blur {
+  transition: filter var(--transition-base), opacity var(--transition-base);
+}
+
+.link-blur:hover {
+  filter: blur(4px);
+  opacity: 0.7;
+}
