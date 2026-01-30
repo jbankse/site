@@ -56,7 +56,7 @@ export default function Navigation({ showHomeLink = false, showLogo = false }: N
                 <div className="flex justify-end">
                     <a
                         href="/buy"
-                        className="text-sm uppercase tracking-wide text-[#333] link-blur hidden md:block"
+                        className={`text-sm uppercase tracking-wide text-[#333] link-blur ${pathname === '/buy' ? 'hidden md:block' : ''}`}
                     >
                         Buy
                     </a>

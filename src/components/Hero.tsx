@@ -112,6 +112,7 @@ interface HeroProps {
     elementClassName?: string;
 }
 
+// Text translations cycle
 const TRANSLATIONS = [
     "UNMARKED LABEL",           // English
     "ÉTIQUETTE SANS MARQUE",    // French
@@ -122,32 +123,55 @@ const TRANSLATIONS = [
     "UNGEKENNZEICHNETES LABEL"  // German
 ];
 
+// Special index for green square (only on mobile)
+const GREEN_SQUARE_INDEX = TRANSLATIONS.length;
+const TOTAL_ITEMS = TRANSLATIONS.length + 1; // +1 for green square
+
 export default function Hero({
-    children, // Removed default here to rely on internal cycling
+    children,
     speed = 2,
     onBounce,
     className = "",
     elementClassName = "",
 }: HeroProps) {
-    const [textIndex, setTextIndex] = useState(0);
+    const [itemIndex, setItemIndex] = useState(0);
     const [isBlurry, setIsBlurry] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Detect mobile
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
             // Start blur out
             setIsBlurry(true);
 
-            // Change text and blur in
+            // Change item and blur in
             setTimeout(() => {
-                setTextIndex((prev) => (prev + 1) % TRANSLATIONS.length);
+                setItemIndex((prev) => {
+                    const next = (prev + 1) % TOTAL_ITEMS;
+                    // Skip green square on desktop
+                    if (!isMobile && next === GREEN_SQUARE_INDEX) {
+                        return 0;
+                    }
+                    return next;
+                });
                 setIsBlurry(false);
-            }, 300); // 300ms matches transition duration
+            }, 300);
         }, 5000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isMobile]);
 
-    const currentText = TRANSLATIONS[textIndex];
+    const isGreenSquare = itemIndex === GREEN_SQUARE_INDEX;
+    const currentText = isGreenSquare ? "" : TRANSLATIONS[itemIndex];
 
     return (
         <section className={`flex-1 relative ${className}`}>
@@ -158,13 +182,19 @@ export default function Hero({
             >
                 <a
                     href="/"
-                    className="text-xl uppercase tracking-wide text-[#333] font-bold block"
+                    className="block transition-all duration-300"
                     style={{
                         filter: isBlurry ? 'blur(8px)' : undefined,
                         opacity: isBlurry ? 0.5 : undefined
                     }}
                 >
-                    {currentText}
+                    {isGreenSquare ? (
+                        <div className="w-6 h-6 bg-[#02ff12]" />
+                    ) : (
+                        <span className="text-xl uppercase tracking-wide text-[#333] font-bold">
+                            {currentText}
+                        </span>
+                    )}
                 </a>
             </BouncingElement>
         </section>
